@@ -71,7 +71,7 @@ def get_fallback_response(user_input):
 def main():
     st.title("Down Syndrome Chatbot")
 
-    # HTML design
+    # HTML design using st.markdown
     html_code = """
     <div style="padding: 20px;">
         <h2>Custom HTML Design</h2>
@@ -84,20 +84,24 @@ def main():
         function getResponse() {
             var user_input = document.getElementById('user_input').value.trim();
             
-            // Fetch bot response from Streamlit app
-            var bot_response = Streamlit.functionality.getQueryParams()["bot_response"];
-            
+            // Trigger a Streamlit button click with the user input
+            Streamlit.Button("Get Response", user_input);
+        }
+        
+        // This function will be called when the Streamlit button is clicked
+        Streamlit.setComponentValue("bot_response", function(bot_response) {
             // Update the HTML with the bot response
             document.getElementById('bot_response').innerText = "Bot Response: " + bot_response;
-        }
+        });
     </script>
     """
-    st.components.v1.html(html_code)
+    st.markdown(html_code, unsafe_allow_html=True)
 
     # Streamlit app logic
     user_input = st.text_input("Enter your question:")
     
-    if st.button("Get Response"):
+    # Triggered when the Streamlit button is clicked
+    if st.button("Get Response", key="Get Response"):
         matched_row = dataset[dataset['Question'].str.contains(user_input, case=False, na=False)]
 
         if not matched_row.empty:
