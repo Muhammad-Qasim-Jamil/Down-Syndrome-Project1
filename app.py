@@ -1,7 +1,7 @@
 # app.py
-# flask import Flask, render_template, request, jsonify
-# import pandas as pd
-# from langchain_community.llms import Clarifai
+flask import Flask, render_template, request, jsonify
+import pandas as pd
+from langchain_community.llms import Clarifai
 import os
 import streamlit as st
 
