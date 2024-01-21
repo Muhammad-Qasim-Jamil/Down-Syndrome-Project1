@@ -1,6 +1,7 @@
 # app.py
 from flask import Flask, render_template, request, jsonify
 from flask_script import Manager
+from flask.cli import FlaskGroup
 import pandas as pd
 from langchain_community.llms import Clarifai
 import os
