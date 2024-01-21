@@ -4,6 +4,7 @@ import pandas as pd
 from langchain_community.llms import Clarifai
 import os
 import streamlit as st
+app.run(debug=True, port=5001)
 
 # Set Clarifai PAT as environment variable
 os.environ["CLARIFAI_PAT"] = '9d07ba8ac414496b8c07bb45216abbf5'
