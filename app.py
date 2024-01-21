@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, jsonify
 import pandas as pd
 from langchain_community.llms import Clarifai
 import os
+import streamlit as st
 
 # Set Clarifai PAT as environment variable
 os.environ["CLARIFAI_PAT"] = '9d07ba8ac414496b8c07bb45216abbf5'
