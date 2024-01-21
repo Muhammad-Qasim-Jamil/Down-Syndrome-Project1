@@ -1,5 +1,6 @@
 # app.py
 from flask import Flask, render_template, request, jsonify
+from flask_script import Manager
 import pandas as pd
 from langchain_community.llms import Clarifai
 import os
@@ -8,6 +9,7 @@ import streamlit as st
 # Set Clarifai PAT as environment variable
 os.environ["CLARIFAI_PAT"] = '9d07ba8ac414496b8c07bb45216abbf5'
 app = Flask(__name__)
+manager = Manager(app)
 
 # Load CSV dataset
 dataset = pd.read_csv('dataset/dataset.csv', encoding='latin1')
@@ -42,4 +44,5 @@ def get_response_route():
     return jsonify({'response': bot_response})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    manager.run()
