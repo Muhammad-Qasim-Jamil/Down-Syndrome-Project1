@@ -1,15 +1,11 @@
-# flask_app.py
-from flask import Flask, render_template, request, jsonify
-from flask_script import Manager
-from flask.cli import FlaskGroup
+# app.py
+import streamlit as st
 import pandas as pd
 from langchain_community.llms import Clarifai
 import os
 
 # Set Clarifai PAT as environment variable
 os.environ["CLARIFAI_PAT"] = '9d07ba8ac414496b8c07bb45216abbf5'
-app = Flask(__name__)
-manager = Manager(app)
 
 # Load CSV dataset
 dataset = pd.read_csv('dataset/dataset.csv', encoding='latin1')
@@ -26,22 +22,24 @@ def get_fallback_response(user_input):
     # Fallback logic using GPT model
     return get_response(user_input)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+def main():
+    st.title("Down Syndrome Chatbot")
 
-@app.route('/get_response', methods=['POST'])
-def get_response_route():
-    user_input = request.form['user_input']
-    matched_row = dataset[dataset['Question'].str.contains(user_input, case=False, na=False)]
+    # Your Streamlit app logic goes here
 
-    if not matched_row.empty:
-        bot_response = matched_row.iloc[0]['Answer']
-    else:
-        # Fallback to GPT model if question not found in the dataset
-        bot_response = get_fallback_response(user_input)
+    user_input = st.text_input("Enter your question:")
+    
+    if st.button("Get Response"):
+        matched_row = dataset[dataset['Question'].str.contains(user_input, case=False, na=False)]
 
-    return jsonify({'response': bot_response})
+        if not matched_row.empty:
+            bot_response = matched_row.iloc[0]['Answer']
+        else:
+            # Fallback to GPT model if question not found in the dataset
+            bot_response = get_fallback_response(user_input)
+
+        st.text("Bot Response:")
+        st.write(bot_response)
 
 if __name__ == '__main__':
-    manager.run()
+    main()
