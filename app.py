@@ -5,7 +5,7 @@ from langchain_community.llms import Clarifai
 import os
 
 # Set Clarifai PAT as environment variable
-os.environ["CLARIFAI_PAT"] = '9d07ba8ac414496b8c07bb45216abbf5'
+os.environ["CLARIFAI_PAT"] = 'enter the key'
 
 # Load CSV dataset
 dataset = pd.read_csv('dataset/dataset.csv', encoding='latin1')
